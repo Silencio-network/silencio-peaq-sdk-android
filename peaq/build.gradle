@@ -71,7 +71,7 @@ mavenPublishing {
 
     signAllPublications()
 
-    coordinates("store.silencio", "peaqsdk", "1.0.11")
+    coordinates("store.silencio", "peaqsdk", "1.0.12")
 
     pom {
 
