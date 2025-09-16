@@ -27,7 +27,7 @@ dependencies {
     dokkaJavadocPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:$dokkaVersion")
     implementation("dev.sublab:common-kotlin:$commonVersion")
     implementation("dev.sublab:hashing-kotlin:$hashingVersion")
-    implementation("dev.sublab:sr25519-kotlin:$sr25519Version")
+    implementation("dev.sublab:sr25519-kotlin:1.0.1")
     implementation("net.i2p.crypto:eddsa:$eddsaVersion")
     implementation("org.web3j:crypto:$web3jCryptoVersion")
     implementation("cash.z.ecc.android:kotlin-bip39:$zcashBIP39Version")
