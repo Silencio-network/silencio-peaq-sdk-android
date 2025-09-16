@@ -84,7 +84,7 @@ mavenPublishing {
 
 
         name = "Silencio encrypting-kotlin-main"
-        description = ""
+        description = "Silencio encrypting-kotlin-main"
         inceptionYear = "2024"
         url = "https://github.com/Silencio-network/silencio-peaq-sdk-android/"
         licenses {

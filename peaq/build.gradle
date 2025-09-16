@@ -77,7 +77,7 @@ mavenPublishing {
 
 
         name = "Silencio Peaq"
-        description = ""
+        description = "Silencio Peaq"
         inceptionYear = "2024"
         url = "https://github.com/Silencio-network/silencio-peaq-sdk-android/"
         licenses {
