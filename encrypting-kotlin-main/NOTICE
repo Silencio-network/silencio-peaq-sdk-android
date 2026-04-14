@@ -1,0 +1,28 @@
+Silencio Peaq SDK - Encrypting Module
+======================================
+
+This artifact (store.silencio:encrypting-kotlin-main:1.0.14) is a
+republish of the upstream encrypting-kotlin library by Substrate
+Laboratory LLC (sublab).
+
+Upstream source:
+  https://github.com/sublabdev/encrypting-kotlin
+  Original Maven coord: dev.sublab:encrypting-kotlin
+
+Original work:
+  Copyright (c) 2023 SUBSTRATE LABORATORY LLC <info@sublab.dev>
+  Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+Modifications by Silencio Network (2026):
+  - Source vendored into the silencio-peaq-sdk-android repository
+    to allow coordinated builds against a pinned dev.sublab:sr25519-kotlin
+    runtime and to control the Kotlin/JDK toolchain alongside the rest
+    of the Silencio Peaq SDK.
+  - Compiled with Kotlin 2.3.20 (JVM target 17) instead of the
+    upstream toolchain.
+  - Republished under store.silencio Maven coordinates.
+
+No semantic changes to the public API. Source files remain under their
+original copyright and Apache 2.0 license.
+
+This redistribution is permitted under Apache License 2.0 Section 4.

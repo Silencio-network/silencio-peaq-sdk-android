@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 // this import for publishing
 import com.vanniktech.maven.publish.SonatypeHost
 import com.vanniktech.maven.publish.KotlinJvm
@@ -41,8 +42,10 @@ tasks.dokkaHtml.configure {
     outputDirectory.set(projectDir.resolve("reference"))
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "17"
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
@@ -53,7 +56,7 @@ val sourcesJar by tasks.registering(Jar::class) {
 val javadocJar by tasks.registering(Jar::class) {
     archiveClassifier.set("javadoc")
     dependsOn("dokkaJavadoc")
-    from("$buildDir/dokka/javadoc")
+    from(layout.buildDirectory.dir("dokka/javadoc"))
 }
 
 tasks.javadoc {
@@ -78,7 +81,7 @@ mavenPublishing {
 
     signAllPublications()
 
-    coordinates("store.silencio", "encrypting-kotlin-main", "1.0.13")
+    coordinates("store.silencio", "encrypting-kotlin-main", "1.0.14")
 
     pom {
 
