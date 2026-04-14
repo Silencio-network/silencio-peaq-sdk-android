@@ -1,0 +1,102 @@
+plugins {
+    id 'base'
+    id 'com.vanniktech.maven.publish.base'
+}
+
+import com.vanniktech.maven.publish.SonatypeHost
+
+group = 'store.silencio'
+version = '2.1.3'
+
+def prebuiltAar = file('libs/silenciopeaqsdk-native-2.1.3.aar')
+
+def emptySourcesJar = tasks.register('emptySourcesJar', Jar) {
+    archiveClassifier.set('sources')
+    destinationDirectory.set(layout.buildDirectory.dir('libs'))
+}
+def emptyJavadocJar = tasks.register('emptyJavadocJar', Jar) {
+    archiveClassifier.set('javadoc')
+    destinationDirectory.set(layout.buildDirectory.dir('libs'))
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'store.silencio'
+            artifactId = 'silenciopeaqsdk-native'
+            version = '2.1.3'
+
+            artifact(prebuiltAar) { extension = 'aar' }
+            artifact(emptySourcesJar)
+            artifact(emptyJavadocJar)
+
+            pom {
+                packaging = 'aar'
+                name = 'Silencio Peaq SDK Native'
+                description = '16KB page-aligned repackage of nova-wallet substrate-sdk-android 2.1.3 for Android 15+ compatibility. libsr25519java.so for arm64-v8a rebuilt from the novasamatech sr25519-java crate with -Wl,-z,max-page-size=16384. All other classes, resources, and arches preserved verbatim from upstream. Distributed under the upstream Apache 2.0 license.'
+                inceptionYear = '2026'
+                url = 'https://github.com/Silencio-network/silencio-peaq-sdk-android/'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'SilencioNetwork'
+                        name = 'SilencioNetwork'
+                        url = 'https://github.com/Silencio-network'
+                    }
+                }
+                scm {
+                    url = 'https://github.com/Silencio-network/silencio-peaq-sdk-android/'
+                    connection = 'scm:git:git://github.com/Silencio-network/silencio-peaq-sdk-android.git'
+                    developerConnection = 'scm:git:ssh://git@github.com:Silencio-network/silencio-peaq-sdk-android.git'
+                }
+
+                // Transitive deps copied verbatim from upstream substrate-sdk-android-2.1.3.pom
+                withXml {
+                    def deps = asNode().appendNode('dependencies')
+                    def addDep = { g, a, v, excludes = null ->
+                        def d = deps.appendNode('dependency')
+                        d.appendNode('groupId', g)
+                        d.appendNode('artifactId', a)
+                        d.appendNode('version', v)
+                        d.appendNode('scope', 'runtime')
+                        if (excludes) {
+                            def ex = d.appendNode('exclusions')
+                            excludes.each { e ->
+                                def x = ex.appendNode('exclusion')
+                                x.appendNode('artifactId', e[0])
+                                x.appendNode('groupId', e[1])
+                            }
+                        }
+                    }
+                    addDep('org.jetbrains.kotlin', 'kotlin-android-extensions-runtime', '1.6.20')
+                    addDep('org.bouncycastle', 'bcprov-jdk15on', '1.65')
+                    addDep('net.i2p.crypto', 'eddsa', '0.3.0')
+                    addDep('com.caverock', 'androidsvg-aar', '1.4')
+                    addDep('com.neovisionaries', 'nv-websocket-client', '2.10')
+                    addDep('io.github.novacrypto', 'SecureString', '2022.01.17', [['*', '*']])
+                    addDep('com.google.code.gson', 'gson', '2.8.2')
+                    addDep('org.web3j', 'crypto', '4.8.0')
+                    addDep('org.eclipse.birt.runtime.3_7_1', 'org.apache.xerces', '2.9.0')
+                    addDep('org.lz4', 'lz4-java', '1.7.1')
+                    addDep('org.jetbrains.kotlinx', 'kotlinx-coroutines-core', '1.4.2')
+                    addDep('com.github.NovaCrypto', 'BIP39', '0e7fa95f80',
+                        [['ToRuntime', 'io.github.novacrypto'], ['SHA256', 'io.github.novacrypto']])
+                    addDep('com.github.NovaCrypto', 'Sha256', '57bed72da5',
+                        [['ToRuntime', 'io.github.novacrypto']])
+                    addDep('com.github.NovaCrypto', 'ToRuntime', 'c3ae3080eb')
+                }
+            }
+        }
+    }
+}
+
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, true)
+    signAllPublications()
+}

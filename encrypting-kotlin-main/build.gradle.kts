@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 // this import for publishing
 import com.vanniktech.maven.publish.SonatypeHost
 import com.vanniktech.maven.publish.KotlinJvm
@@ -27,7 +28,7 @@ dependencies {
     dokkaJavadocPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:$dokkaVersion")
     implementation("dev.sublab:common-kotlin:$commonVersion")
     implementation("dev.sublab:hashing-kotlin:$hashingVersion")
-    implementation("dev.sublab:sr25519-kotlin:$sr25519Version")
+    implementation("dev.sublab:sr25519-kotlin:1.0.1")
     implementation("net.i2p.crypto:eddsa:$eddsaVersion")
     implementation("org.web3j:crypto:$web3jCryptoVersion")
     implementation("cash.z.ecc.android:kotlin-bip39:$zcashBIP39Version")
@@ -41,8 +42,10 @@ tasks.dokkaHtml.configure {
     outputDirectory.set(projectDir.resolve("reference"))
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "17"
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
@@ -53,7 +56,7 @@ val sourcesJar by tasks.registering(Jar::class) {
 val javadocJar by tasks.registering(Jar::class) {
     archiveClassifier.set("javadoc")
     dependsOn("dokkaJavadoc")
-    from("$buildDir/dokka/javadoc")
+    from(layout.buildDirectory.dir("dokka/javadoc"))
 }
 
 tasks.javadoc {
@@ -78,13 +81,13 @@ mavenPublishing {
 
     signAllPublications()
 
-    coordinates("store.silencio", "encrypting-kotlin-main", "1.0.11")
+    coordinates("store.silencio", "encrypting-kotlin-main", "1.0.14")
 
     pom {
 
 
         name = "Silencio encrypting-kotlin-main"
-        description = ""
+        description = "Silencio encrypting-kotlin-main"
         inceptionYear = "2024"
         url = "https://github.com/Silencio-network/silencio-peaq-sdk-android/"
         licenses {
