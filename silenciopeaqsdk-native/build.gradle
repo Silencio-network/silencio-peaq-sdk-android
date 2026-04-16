@@ -6,9 +6,9 @@ plugins {
 import com.vanniktech.maven.publish.SonatypeHost
 
 group = 'store.silencio'
-version = '2.1.3'
+version = '2.1.4'
 
-def prebuiltAar = file('libs/silenciopeaqsdk-native-2.1.3.aar')
+def prebuiltAar = file('libs/silenciopeaqsdk-native-2.1.4.aar')
 
 def emptySourcesJar = tasks.register('emptySourcesJar', Jar) {
     archiveClassifier.set('sources')
@@ -24,7 +24,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'store.silencio'
             artifactId = 'silenciopeaqsdk-native'
-            version = '2.1.3'
+            version = '2.1.4'
 
             artifact(prebuiltAar) { extension = 'aar' }
             artifact(emptySourcesJar)
@@ -33,7 +33,7 @@ publishing {
             pom {
                 packaging = 'aar'
                 name = 'Silencio Peaq SDK Native'
-                description = '16KB page-aligned repackage of nova-wallet substrate-sdk-android 2.1.3 for Android 15+ compatibility. libsr25519java.so for arm64-v8a rebuilt from the novasamatech sr25519-java crate with -Wl,-z,max-page-size=16384. All other classes, resources, and arches preserved verbatim from upstream. Distributed under the upstream Apache 2.0 license.'
+                description = '16KB page-aligned repackage of nova-wallet substrate-sdk-android 2.1.3 for Android 15+ compatibility. libsr25519java.so for arm64-v8a and x86_64 rebuilt from the novasamatech sr25519-java crate with -Wl,-z,max-page-size=16384. All other classes, resources, and 32-bit arches preserved verbatim from upstream. Distributed under the upstream Apache 2.0 license.'
                 inceptionYear = '2026'
                 url = 'https://github.com/Silencio-network/silencio-peaq-sdk-android/'
                 licenses {

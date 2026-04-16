@@ -57,7 +57,7 @@ dependencies {
     api 'dev.sublab:common-kotlin:1.0.0'
 
     //RPC Call — 16KB page-aligned repackage of nova-wallet substrate-sdk-android 2.1.3
-    api 'store.silencio:silenciopeaqsdk-native:2.1.3'
+    api 'store.silencio:silenciopeaqsdk-native:2.1.4'
     api 'com.neovisionaries:nv-websocket-client:2.14'
     api 'com.google.code.gson:gson:2.10.1'
 
@@ -76,7 +76,7 @@ mavenPublishing {
 
     signAllPublications()
 
-    coordinates("store.silencio", "peaqsdk", "1.0.14")
+    coordinates("store.silencio", "peaqsdk", "1.0.15")
 
     pom {
 
